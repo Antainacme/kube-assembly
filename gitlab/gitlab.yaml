@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab
+  namespace: global-sys
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gitlab
+      labels:
+        name: gitlab
+        app: gitlab
+    spec:
+      containers:
+      - name: gitlab
+        image: registry.cn-hangzhou.aliyuncs.com/knoms/gitlab-ce
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /etc/gitlab
+          name: config
+        - mountPath: /var/log/gitlab
+          name: logs
+        - mountPath: /var/opt/gitlab
+          name: data
+        ports:
+        - containerPort: 443
+        - containerPort: 80
+        - containerPort: 22
+      volumes:
+      - hostPath:
+          path: /opt/gitlab/config
+        name: config
+      - hostPath:
+          path: /opt/gilab/logs
+        name: logs
+      - hostPath:
+          path: /opt/gitlab/data
+        name: data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  namespace: global-sys
+  labels:
+    app: gitlab
+spec:
+  type: NodePort
+  selector:
+    app: gitlab
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30021
+    name: http
+  - port: 22
+    targetPort: 22
+    protocol: TCP
+    name: tcp
+  - port: 443
+    targetPort: 443
+    name: https

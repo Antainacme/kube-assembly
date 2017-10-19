@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: global-sys
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gitlab-runner
+      labels:
+        name: gitlab-runner
+        app: gitlab-runner
+    spec:
+      containers:
+      - name: gitlab-runner
+        image: gitlab/gitlab-runner
+        imagePullPolicy: IfNotPresent
+        #command:
+        #- 'gitlab-ci-multi-runner register'
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+        - mountPath: /etc/gitlab-runner
+          name: config
+      volumes:
+      - hostPath:
+          path: /var/run/docker.sock
+        name: docker-sock
+      - hostPath:
+          path: /opt/gitlab/gitlab-runner-config
+        name: config
