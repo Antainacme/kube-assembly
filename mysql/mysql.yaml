@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -18,14 +19,15 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: 123456
+          value: "123456"
         - name: MYSQL_USER
-          value: mysql
+          value: "mysql"
         - name: MYSQL_PASSWORD
-          value: 123456
+          value: "123456"
+        - name: MYSQL_DATABASE
+          value: edukt
         ports:
-        - name: TCP
-          containerPort: 3306
+        - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: data
