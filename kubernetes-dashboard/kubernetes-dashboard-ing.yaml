@@ -6,10 +6,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - 172.0.7.101
+    - knoms.k8s.com
     secretName: loadblance
   rules:
-  - host: 172.0.7.101
+  - host: knoms.k8s.com
     http:
       paths:
       - path: /dashboard/
