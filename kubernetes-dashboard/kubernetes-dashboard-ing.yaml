@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  tls:
+  - hosts:
+    - 172.0.7.101
+    secretName: loadblance
+  rules:
+  - host: 172.0.7.101
+    http:
+      paths:
+      - path: /dashboard/
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
