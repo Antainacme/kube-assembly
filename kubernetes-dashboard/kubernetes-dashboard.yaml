@@ -59,10 +59,10 @@ spec:
         k8s-app: kubernetes-dashboard
     spec:
       nodeSelector:
-        kube-system: master
+        kubernetes.io/hostname: localhost.localdomain
       containers:
       - name: kubernetes-dashboard
-        image: knoms/kubernetes-dashboard-amd64:v1.6.3
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.3
         ports:
         - containerPort: 9090
           protocol: TCP
