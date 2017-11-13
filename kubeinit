@@ -1,0 +1,97 @@
+#!/bin/bash
+
+
+apiVersion=v1.7.5
+GCR=gcr.io/google_containers
+KUBE_REPO_PREFIX=knoms
+IMAGE_ARR=core
+
+docker-pull(){
+  IMAGES=$1
+  if [ ${#IMAGES[@]} -gt 0 ]; then
+    echo "starting pull images $IMAGES"
+    for imageName in ${IMAGES[@]} ; do
+	      docker pull $KUBE_REPO_PREFIX/$imageName
+        docker tag $KUBE_REPO_PREFIX/$imageName $GCR/$imageName
+        docker rmi -f $KUBE_REPO_PREFIX/$imageName
+    done
+  fi
+}
+
+start(){
+  case "$1" in
+    'es')
+      	IMAGES=(
+      	  elasticsearch:v2.4.1-2
+          fluentd-elasticsearch:1.22
+          kibana:v4.6.1-1
+      	)
+        docker-pull "${IMAGES[*]}"
+	      ;;
+   'core')
+      	IMAGES=(
+      	  kube-apiserver-amd64:$apiVersion
+          kube-controller-manager-amd64:$apiVersion
+          kube-scheduler-amd64:$apiVersion
+          kube-proxy-amd64:$apiVersion
+      	  pause-amd64:3.0
+      	  etcd-amd64:3.0.17
+      	  k8s-dns-dnsmasq-nanny-amd64:1.14.4
+          k8s-dns-kube-dns-amd64:1.14.4
+          k8s-dns-sidecar-amd64:1.14.4
+      	)
+      	docker-pull "${IMAGES[*]}"
+        ;;
+    'heapster')
+      	IMAGES=(
+      	  heapster-amd64:v1.4.0
+          heapster-grafana-amd64:v4.4.3
+          heapster-influxdb-amd64:v1.3.3
+      	)
+      	docker-pull "${IMAGES[*]}"
+        ;;
+    'dashboard')
+      	IMAGES=(
+      	  kube-discovery-amd64:1.0
+          kubernetes-dashboard-amd64:v1.6.3
+      	)
+      	docker-pull "${IMAGES[*]}"
+        ;;
+    'ingress')
+        IMAGES=(
+          defaultbackend:1.0
+          nginx-ingress-controller:0.9.0-beta.15
+        )
+        docker-pull "${IMAGES[*]}"
+        ;;
+    'other')
+        IMAGES=(
+	        exechealthz-amd64:1.2
+          echoserver:1.0
+        )
+        docker-pull "${IMAGES[*]}"
+        ;;
+  esac
+}
+
+while getopts "v:r:i:" arg
+do
+
+  case "$arg" in
+    'v')
+        apiVersion=$OPTARG
+        ;;
+    'r')
+        KUBE_REPO_PREFIX=$OPTARG
+        ;;
+    'i')
+        IMAGE_ARR=$OPTARG
+        ;;
+    ?)
+        echo "unkonw argument"
+        exit 1
+        ;;
+  esac
+done
+
+start $IMAGE_ARR

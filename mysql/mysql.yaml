@@ -25,7 +25,7 @@ spec:
         - name: MYSQL_PASSWORD
           value: "123456"
         - name: MYSQL_DATABASE
-          value: “edukt”
+          value: "edukt"
         ports:
         - containerPort: 3306
         volumeMounts:
