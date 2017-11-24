@@ -127,6 +127,9 @@ spec:
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
+        - mountPath: /etc/ssl/certs
+          name: ssl-certs-host
+          readOnly: true
         livenessProbe:
           httpGet:
             scheme: HTTPS
@@ -140,6 +143,8 @@ spec:
           secretName: kubernetes-dashboard-certs
       - name: tmp-volume
         emptyDir: {}
+      - name: ssl-certs-host
+        emptyDir: /etc/kubernetes/pki/
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
