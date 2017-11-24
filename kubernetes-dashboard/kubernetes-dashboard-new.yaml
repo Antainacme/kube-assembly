@@ -111,6 +111,8 @@ spec:
         ports:
         - containerPort: 8443
           protocol: TCP
+        - containerPort: 9090
+          protocol: TCP
         args:
           - --tls-key-file=/certs/dashboard.key
           - --tls-cert-file=/certs/dashboard.crt
@@ -158,5 +160,8 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
+    - port: 80
+      targetPort: 9090
+      nodePort: 30022
   selector:
     k8s-app: kubernetes-dashboard
