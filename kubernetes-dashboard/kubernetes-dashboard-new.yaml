@@ -120,7 +120,7 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           #- --apiserver-host=https://172.0.7.101:6443
-          - --kubeconfig=~/.kube/config
+          - --kubeconfig=/root/.kube/config
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
@@ -128,7 +128,7 @@ spec:
           # Create on-disk volume to store exec logs
         - mountPath: /tmp
           name: tmp-volume
-        - mountPath: ~/.kube
+        - mountPath: /root/.kube
           name: config
         livenessProbe:
           httpGet:
@@ -144,7 +144,7 @@ spec:
       - name: tmp-volume
         emptyDir: {}
       - hostPath:
-          path: ~/.kube/
+          path: /root/.kube/
         name: config
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
