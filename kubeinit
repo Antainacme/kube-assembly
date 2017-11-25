@@ -54,6 +54,8 @@ start(){
       	IMAGES=(
       	  kube-discovery-amd64:1.0
           kubernetes-dashboard-amd64:v1.6.3
+          kubernetes-dashboard-amd64:v1.7.1
+          kubernetes-dashboard-init-amd64:v1.0.1
       	)
       	docker-pull "${IMAGES[*]}"
         ;;
