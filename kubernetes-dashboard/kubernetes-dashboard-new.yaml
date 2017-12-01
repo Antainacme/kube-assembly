@@ -99,6 +99,8 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
+      nodeSelector:
+        node-role.kubernetes.io/master:
       initContainers:
       - name: kubernetes-dashboard-init
         image: gcr.io/google_containers/kubernetes-dashboard-init-amd64:v1.0.1
