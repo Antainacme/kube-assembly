@@ -93,7 +93,7 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30021
+    nodePort: 30020
     name: http
   - port: 22
     targetPort: 22
