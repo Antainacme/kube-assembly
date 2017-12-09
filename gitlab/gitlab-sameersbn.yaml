@@ -1,0 +1,104 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab
+  namespace: development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: gitlab
+      labels:
+        name: gitlab
+        app: gitlab
+    spec:
+      containers:
+      - name: postgresql
+        image: sameersbn/postgresql:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: postgresql-data
+        env:
+        - name: DB_NAME
+          value: gitlabhq_production
+        - name: DB_USER
+          value: gitlab
+        - name: DB_PASS
+          value: postgresqlpwd123
+      - name: redisio
+        image: sameersbn/redis:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /var/lib/redis
+          name: redis-data
+      - name: gitlab
+        image: sameersbn/gitlab:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: GITLAB_SECRETS_DB_KEY_BASE
+          value: long-and-random-alpha-numeric-string
+        - name: GITLAB_SECRETS_SECRET_KEY_BASE
+          value: long-and-random-alpha-numeric-string
+        - name: GITLAB_SECRETS_OTP_KEY_BASE
+          value: long-and-random-alpha-numeric-string
+        - name: GITLAB_PORT
+          value: 8002
+        - name: GITLAB_SSH_PORT
+          value: 8001
+        volumeMounts:
+        - mountPath: /home/git/data
+          name: gitlab-data
+        - mountPath: /var/log/gitlab
+          name: gitlab-log
+        - mountPath: /bin/docker
+          name: docker
+        - mountPath: /run/docker.sock
+          name: docker-sock
+        ports:
+        - containerPort: 22
+        - containerPort: 80
+      volumes:
+      - hostPath:
+          path: /opt/gitlab/postgresql
+        name: postgresql-data
+      - hostPath:
+          path: /opt/gilab/logs
+        name: gitlab-log
+      - hostPath:
+          path: /opt/gitlab/data
+        name: gitlab-data
+      - hostPath:
+          path: /opt/gitlab/redis
+        name: redis-data
+      - hostPath:
+          path: $(which docker)
+        name: docker
+      - hostPath:
+          path: /var/run/docker.sock
+        name: docker-sock
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  namespace: development
+  labels:
+    app: gitlab
+spec:
+  type: NodePort
+  selector:
+    app: gitlab
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30021
+    name: http
+  - port: 22
+    targetPort: 22
+    protocol: TCP
+    name: tcp
+  - port: 443
+    targetPort: 443
+    name: https
