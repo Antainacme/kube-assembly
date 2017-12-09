@@ -38,11 +38,11 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: GITLAB_SECRETS_DB_KEY_BASE
-          value: long-and-random-alpha-numeric-string
+          value: "long-and-random-alpha-numeric-string"
         - name: GITLAB_SECRETS_SECRET_KEY_BASE
-          value: long-and-random-alpha-numeric-string
+          value: "long-and-random-alpha-numeric-string"
         - name: GITLAB_SECRETS_OTP_KEY_BASE
-          value: long-and-random-alpha-numeric-string
+          value: "long-and-random-alpha-numeric-string"
         - name: GITLAB_PORT
           value: 8002
         - name: GITLAB_SSH_PORT
