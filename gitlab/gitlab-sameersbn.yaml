@@ -73,7 +73,7 @@ spec:
           path: /opt/gitlab/redis
         name: redis-data
       - hostPath:
-          path: $(which docker)
+          path: /usr/lib/docker
         name: docker
       - hostPath:
           path: /var/run/docker.sock
