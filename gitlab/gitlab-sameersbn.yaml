@@ -22,11 +22,11 @@ spec:
           name: postgresql-data
         env:
         - name: DB_NAME
-          value: gitlabhq_production
+          value: "gitlabhq_production"
         - name: DB_USER
-          value: gitlab
+          value: "gitlab"
         - name: DB_PASS
-          value: postgresqlpwd123
+          value: "postgresqlpwd123"
       - name: redisio
         image: sameersbn/redis:latest
         imagePullPolicy: IfNotPresent
@@ -44,9 +44,9 @@ spec:
         - name: GITLAB_SECRETS_OTP_KEY_BASE
           value: "long-and-random-alpha-numeric-string"
         - name: GITLAB_PORT
-          value: 8002
+          value: "8002"
         - name: GITLAB_SSH_PORT
-          value: 8001
+          value: "8001"
         volumeMounts:
         - mountPath: /home/git/data
           name: gitlab-data
