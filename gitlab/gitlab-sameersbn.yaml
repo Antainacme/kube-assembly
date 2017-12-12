@@ -13,6 +13,8 @@ spec:
         name: gitlab
         app: gitlab
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: gd-node-git
       containers:
       - name: postgresql
         image: sameersbn/postgresql:latest
