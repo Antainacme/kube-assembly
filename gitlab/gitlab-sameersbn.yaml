@@ -27,6 +27,8 @@ spec:
           value: "gitlab"
         - name: DB_PASS
           value: "postgresqlpwd123"
+        - name: "DB_EXTENSION"
+          value: "pg_trgm"
       - name: redisio
         image: sameersbn/redis:latest
         imagePullPolicy: IfNotPresent
@@ -56,7 +58,7 @@ spec:
         - name: REDIS_HOST
           value: "localhost"
         - name: REDIS_PORT
-          value: 6379
+          value: "6379"
         - name: GITLAB_PORT
           value: "8002"
         - name: GITLAB_SSH_PORT
