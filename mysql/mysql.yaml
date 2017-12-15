@@ -14,7 +14,7 @@ spec:
         app: mysql56
     spec:
       nodeSelector:
-        kubernetes.io/hostname: gd-node-00
+        kubernetes.io/hostname: gd-node-01
       containers:
       - name: mysql56
         image: mysql:5.6
@@ -33,10 +33,15 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: data
+        - mountPath: /etc/mysql/mysql.conf.d
+          name: conf
       volumes:
       - hostPath:
           path: /opt/data/mysql
         name: data
+      - hostPath:
+          path: /opt/data/mysql/config
+        name: conf
 ---
 apiVersion: v1
 kind: Service
