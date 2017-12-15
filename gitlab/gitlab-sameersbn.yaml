@@ -43,6 +43,20 @@ spec:
           value: "long-and-random-alpha-numeric-string"
         - name: GITLAB_SECRETS_OTP_KEY_BASE
           value: "long-and-random-alpha-numeric-string"
+        - name: DB_ADAPTER
+          value: "postgresql"
+        - name: DB_HOST
+          value: "localhost"
+        - name: DB_NAME
+          value: gitlabhq_production
+        - name: DB_USER
+          value: gitlab
+        - name: DB_PASS
+          value: postgresqlpwd123
+        - name: REDIS_HOST
+          value: "localhost"
+        - name: REDIS_PORT
+          value: 6379
         - name: GITLAB_PORT
           value: 8002
         - name: GITLAB_SSH_PORT
