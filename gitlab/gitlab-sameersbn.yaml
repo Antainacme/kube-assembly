@@ -48,11 +48,11 @@ spec:
         - name: DB_HOST
           value: "localhost"
         - name: DB_NAME
-          value: gitlabhq_production
+          value: "gitlabhq_production"
         - name: DB_USER
-          value: gitlab
+          value: "gitlab"
         - name: DB_PASS
-          value: postgresqlpwd123
+          value: "postgresqlpwd123"
         - name: REDIS_HOST
           value: "localhost"
         - name: REDIS_PORT
