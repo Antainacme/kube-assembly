@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: memcached-config
+  namespace: platinst
+data:
+  username: memcached
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: memcached-secrets
+  namespace: platinst
+data:
+  password: MTIzNDU2Cg==
