@@ -4,7 +4,7 @@ metadata:
   name: mysql-config
   namespace: development
 data:
-  mysql.config: |
+  mysql.config：|
     user: mysql
     database: edukt
 ---
@@ -14,3 +14,7 @@ metadata:
   name: mysql-secrets
   namespace: development
 data:
+  root_password: MTIzNDU2Cg==
+  user_password: MTIzNDU2Cg==
+
+
