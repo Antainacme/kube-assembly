@@ -21,13 +21,25 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: "123456"
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-secrets
+              key: root_password
         - name: MYSQL_USER
-          value: "mysql"
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: user
         - name: MYSQL_PASSWORD
-          value: "123456"
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-secrets
+              key: user_password
         - name: MYSQL_DATABASE
-          value: "edukt"
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: database
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -40,7 +52,7 @@ spec:
           path: /opt/data/mysql
         name: data
       - hostPath:
-          path: /opt/data/mysql/config
+          path: /opt/config/mysql
         name: conf
 ---
 apiVersion: v1
