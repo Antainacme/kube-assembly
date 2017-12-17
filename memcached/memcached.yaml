@@ -30,6 +30,13 @@ spec:
               key: password
         ports:
         - containerPort: 11211
+        resources:
+          limits:
+            cpu: 300m
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
