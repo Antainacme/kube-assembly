@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-config
-  namespace: development
+  namespace: platinst
 data:
   username: mysql
   database: edukt
@@ -14,7 +14,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mysql-secrets
-  namespace: development
+  namespace: platinst
 data:
   root_password: MTIzNDU2Cg==
   user_password: MTIzNDU2Cg==

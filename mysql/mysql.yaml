@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: mysql56
-  namespace: development
+  namespace: platinst
 spec:
   replicas: 1
   template:
@@ -59,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql56
-  namespace: development
+  namespace: platinst
   labels:
     app: mysql56
 spec:
