@@ -4,10 +4,6 @@ metadata:
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
-  tls:
-  - hosts:
-    - k8s.ax.com
-    secretName: loadblance
   rules:
   - host: k8s.ax.com
     http:
