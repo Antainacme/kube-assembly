@@ -20,7 +20,7 @@ spec:
         # Any image is permissable as long as:
         # 1. It serves a 404 page at /
         # 2. It serves 200 on a /healthz endpoint
-        image: knoms/defaultbackend:1.0
+        image: gcr.io/google_containers/defaultbackend:1.0
         livenessProbe:
           httpGet:
             path: /healthz
@@ -75,6 +75,8 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/master:
       serviceAccountName: nginx-ingress-serviceaccount
+      hostNetwork: true
+      terminationGracePeriodSeconds: 60
       containers:
         - name: nginx-ingress-controller
           image: knoms/nginx-ingress-controller:0.9.0-beta.15
@@ -98,3 +100,15 @@ spec:
             containerPort: 80
           - name: https
             containerPort: 443
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1

@@ -19,45 +19,14 @@ rules:
       - nodes
       - pods
       - secrets
-    verbs:
-      - list
-      - watch
-  - apiGroups:
-      - ""
-    resources:
-      - nodes
-    verbs:
-      - get
-  - apiGroups:
-      - ""
-    resources:
+      - events
       - services
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "extensions"
-    resources:
-      - ingresses
-    verbs:
-      - get
-      - list
-      - watch
+    verbs: ["list","watch","create","update","delete","get"]
   - apiGroups:
       - ""
-    resources:
-        - events
-    verbs:
-        - create
-        - patch
-  - apiGroups:
       - "extensions"
-    resources:
-      - ingresses/status
-    verbs:
-      - update
-
+      resources: ["services","nodes","ingresses","pods","ingresses/status"]
+      verbs: ["list","watch","create","update","delete","get"]
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -115,7 +84,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: nginx-ingress-serviceaccount
-    #namespace: default
+    namespace: default
 
 ---
 
